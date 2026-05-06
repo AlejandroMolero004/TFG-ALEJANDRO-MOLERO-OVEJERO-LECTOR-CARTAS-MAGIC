@@ -10,8 +10,8 @@ def recortar_imagen():
     h, w = img.shape[:2]
 
     # Número de divisiones
-    filas = 40
-    columnas = 40
+    filas = 80
+    columnas = 80
 
     # Dibujar líneas verticales
     for i in range(1, columnas):
