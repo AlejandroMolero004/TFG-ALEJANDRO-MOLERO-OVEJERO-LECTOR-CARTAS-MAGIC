@@ -20,7 +20,7 @@ def elegir_parte_cuadricula():
 
     # Desde fila 1 hasta fila 3
     fila_inicio = 2
-    fila_fin = 4 
+    fila_fin = 5 
 
     # Desde columna 1 hasta columna 5
     columna_inicio = 22

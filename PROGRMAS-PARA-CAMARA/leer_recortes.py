@@ -11,6 +11,8 @@ def leer_recortes():
     # Pasar a gris
     gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+    # Identificar foil
+
     # Mejorar imagen
     gris = cv2.resize(gris, None, fx=2, fy=2)
     _, binaria = cv2.threshold(gris, 150, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)

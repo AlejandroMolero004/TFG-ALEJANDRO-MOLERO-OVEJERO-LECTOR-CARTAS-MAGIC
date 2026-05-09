@@ -26,9 +26,6 @@ def foto():
     recortar_imagen()
     elegir_parte_cuadricula()
     data = leer_recortes() 
-    print("************************FUNCION FOTO****************")
-    print (data)
-    print("****************************************************")
     return data
     
 
