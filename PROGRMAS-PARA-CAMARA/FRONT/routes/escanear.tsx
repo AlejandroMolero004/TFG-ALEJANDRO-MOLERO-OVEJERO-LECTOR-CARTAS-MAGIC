@@ -1,4 +1,5 @@
 import { FreshContext, Handlers,PageProps } from "$fresh/server.ts";
+import { insert_card } from "../bbdd/conexion.tsx";
 import { get_html_content } from "../scrap/scrap.tsx";
 
 
@@ -64,7 +65,7 @@ export const handler:Handlers = {
         if (!response.ok) {
             console.log("Error al escanear la carta", "error");
             console.error("Error al escanear la carta:", response.statusText);
-            return ctx.render("");
+            return ctx.render();
         }
         
         const data:Carta_Recomendaciones = await response.json();
@@ -84,21 +85,39 @@ export const handler:Handlers = {
         }
         return ctx.render(resultado);
         // console.log(data.resultado);
-    }
-   
-
+    },
+    POST:async (req:Request,ctx:FreshContext<unknown,Carta_Recomendaciones_precio>) => {
+          console.log("ENTRANDO AL POST");
+        const formData = await req.formData();
+        const carta : Carta_Recomendaciones_precio = JSON.parse(formData.get("carta") as string) as Carta_Recomendaciones_precio;
+        console.log("Guardando carta en la base de datos...");
+        await insert_card({
+            name: carta.Carta_Recomendaciones.resultado.carta.name, 
+            img: carta.Carta_Recomendaciones.resultado.carta.image_uris.normal, 
+            coleccion: carta.precios[2]
+        });
+        console.log("Carta guardada en la base de datos");
+        return ctx.render(carta);
+    }        
+         
 }
 
 const Page = (props:PageProps<Carta_Recomendaciones_precio>) => {
-    console.log("Props recibidos en el componente:", props.data.Carta_Recomendaciones.resultado.carta.mana_cost.replace(/[{}]/g,"").trim());
+   
     return (
         <div>
             <form method="GET" action="/escanear">
-                <button type="submit">Escanear carta</button>
+                <button type="submit">Escanear carta</button>                
             </form>  
-                      
-            {props.data === "" ? <p>No se ha podido escanear la carta</p> :
+            <a href="/perfil">Consultar colección</a>          
+            {props.data === "" ? <p>No se ha podido escanear la carta</p> : 
                 <div class ="carta-resultado">
+                    <div>
+                        <form action="/escanear" method="POST">
+                            <button type="submit">Guardar Carta</button>
+                            <input type="hidden" name="carta" value={JSON.stringify(props.data)} />
+                        </form>
+                    </div>
                     <div>
                         <img src={props.data.Carta_Recomendaciones.resultado.carta.image_uris.normal} alt="Carta escaneada" />
                     </div>
