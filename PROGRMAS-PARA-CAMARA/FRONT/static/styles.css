@@ -128,13 +128,143 @@ html {
   font-variant-numeric: tabular-nums;
 }
 
-.carta.resultado {
+.carta-resultado {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 25px;
+  display: grid;
+  grid-template-columns: 180px 300px 1fr;
+  gap: 30px;
+  align-items: start;
+
+  background: #1e1e2f;
+  color: #f5f5f5;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  font-family: Arial, sans-serif;
+}
+
+.carta-resultado form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  border: 2px solid #6b7280;
-  border-radius: 0.25rem;
-  padding: 1rem;
-  background-color: #fff;
+}
+
+.carta-resultado button {
+  padding: 12px 18px;
+  background: #7b5cff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.carta-resultado button:hover {
+  background: #5f43d6;
+  transform: scale(1.05);
+}
+
+.carta-resultado img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.carta-resultado > div:nth-child(2) img {
+  width: 280px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.carta-resultado h2 {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.carta-resultado a {
+  display: inline-block;
+  margin: 8px 10px 8px 0;
+  padding: 10px 14px;
+  background: #2f80ed;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
+
+.carta-resultado a:hover {
+  background: #1c5fb8;
+}
+
+.carta-resultado p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.mana-symbol {
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .carta-resultado {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .carta-resultado > div:nth-child(2) img {
+    width: 240px;
+    margin: 0 auto;
+  }
+
+  .carta-resultado div[style] {
+    justify-content: center;
+  }
+}
+
+form {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+form button,
+a {
+  display: inline-block;
+  padding: 14px 22px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Botón escanear */
+form button {
+  background: #7b5cff;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(123, 92, 255, 0.35);
+}
+
+form button:hover {
+  background: #5f43d6;
+  transform: translateY(-2px);
+}
+
+/* Link colección */
+a {
+  background: #2f80ed;
+  color: white;
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.35);
+}
+
+a:hover {
+  background: #1c5fb8;
+  transform: translateY(-2px);
 }

@@ -2,9 +2,11 @@ import re
 import cv2
 import pytesseract
 import requests
-from buscar_recomendaciones import autocompletar_recomendaciones 
+from buscar_recomendaciones import autocompletar_recomendaciones
+import time 
 
 def leer_recortes():
+    t_inicial_leer_recortes = time.perf_counter()
     nombre_carta = ""
     img = cv2.imread("nombre.jpg")
 
@@ -19,13 +21,14 @@ def leer_recortes():
 
     # OCR
     # psm = Page Segmentation Mode cómo está organizado el texto en la imagen  6 = una sola línea de texto
-    whitelist = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ'., "
+    whitelist = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ., "
     config = f'--psm 6 -c tessedit_char_whitelist="{whitelist}"'
 
     nombre = pytesseract.image_to_string(binaria, lang="spa+eng",                                        
     config = config
     ) 
 
+    
     data = pytesseract.image_to_data(binaria, output_type=pytesseract.Output.DICT)
     print (data)
 
@@ -34,6 +37,7 @@ def leer_recortes():
         print(f"Texto: {data['text'][i]})")
         if data['text'][i] != "" and data['conf'][i] > 60:  
             nombre_carta += data['text'][i] + " "
+            print(f" CONFIANZA: {data['conf'][i]} ")
     print ("--------------------------------------------------")
     print("Nombre OCR: " + nombre_carta)
     print("--------------------------------------------------")
@@ -94,7 +98,10 @@ def leer_recortes():
         
         recomendaciones = autocompletar_recomendaciones(nombre_carta)
         print(recomendaciones)
-        
+        t_elegir_leer_recortes = time.perf_counter() - t_inicial_leer_recortes
+        print(f"-----------------------------------------------------------")
+        print(f"TIEMPO RECONOCER LA FOTO : {t_elegir_leer_recortes*1000:1f} ms") 
+        print(f"-----------------------------------------------------------")
         return {"carta": data, "recomendaciones": recomendaciones}
         #print ("****************DATA*****************")
         #print(data)
